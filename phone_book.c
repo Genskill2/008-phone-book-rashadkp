@@ -186,12 +186,12 @@ int delete(FILE *db_file, char *name) {
   int deleted = 0;
   while (p!=NULL) {
     if (strcmp(p->name, name) == 0) {
-     	if (p==base){
+     	if (p==base){ // if first node is to be deleted
      	base = p->next;
      	free(p);
      	deleted =1;
      	}
-     	else {
+     	else { // i
      	prev->next=p->next;
      	free (p);
      	deleted = 1;}
@@ -199,6 +199,7 @@ int delete(FILE *db_file, char *name) {
     else {
     	prev=p;
     	p=p->next;
+    	deleted = 0;
     }
   }
   write_all_entries(base);
@@ -214,6 +215,7 @@ int search(FILE *db_file,char *name){
   	{
   		printf("%s\n",p->phone);
   		break;
+  		return 0;
   	}else {
   		p=p->next;
   	}
@@ -221,5 +223,6 @@ int search(FILE *db_file,char *name){
   if (p == NULL){
   printf("no match\n");}
 	free_entries(base);
-  return 0;
+  return 1;
+  
   }
