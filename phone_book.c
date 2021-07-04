@@ -196,11 +196,14 @@ int delete(FILE *db_file, char *name) {
      	base = p->next;
      	free(p);
      	deleted =1;
+     	
      	}
      	else { // i
      	prev->next=p->next;
      	free (p);
-     	deleted = 1;}
+     	deleted = 1;
+     	}
+    break;
     }
     else {
     	prev=p;
