@@ -66,9 +66,15 @@ int main(int argc, char *argv[]) {
       exit(1);
     }
     FILE *fp = open_db_file();
-    search(fp,argv[2]);
+        if(!search(fp,argv[2])){
+    	printf("no match\n");
+    	fclose(fp);
+    	exit(1);
+    }
+    else{
     fclose(fp);
     exit(0);
+    }
   } else if (strcmp(argv[1], "delete") == 0) {  /* Handle delete */
     if (argc != 3) {
       print_usage("Improper arguments for delete", argv[0]);
@@ -210,19 +216,21 @@ int delete(FILE *db_file, char *name) {
 int search(FILE *db_file,char *name){
 	entry *p = load_entries(db_file);
   entry *base = p;
+  int searched=0;
   while(p != NULL){
   	if (strcmp(name,p->name) == 0)
   	{
   		printf("%s\n",p->phone);
+  		searched = 1;
   		break;
-  		return 0;
   	}else {
   		p=p->next;
   	}
   }
   if (p == NULL){
-  printf("no match\n");}
+  searched=0;
+  }
 	free_entries(base);
-  return 1;
+  return searched;
   
   }
